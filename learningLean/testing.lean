@@ -51,7 +51,14 @@ opaque emm : Nat
 -- compose key less likely than \
 -- that is: try backslash + best guess
 -- then search the Zulip chat!
+-- (for instance \ + . )
 #eval twice (· + 2) 10
+#eval twice (·  + 3) 11
+#eval twice (· + 4) 12
+
+-- (remark: still 'worried' about function indentation)
+
+
 
 
 
