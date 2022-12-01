@@ -85,8 +85,43 @@ opaque emm : Nat
 #eval (5, 9).1     -- 5
 #eval (5, 9).2     -- 9
 
+-- BEGIN THEOREM PROVING (LEAN4) BOOK
+def m : Nat := 1
+def n : Nat := 0
+def b1 : Bool := true
+def b2 : Bool := false
 
+/- a new kind of comment...! -/
+#check b1
+#check b2
+#check b1 || b2
+#check b1 && b2
+#eval b1 && b2
+#eval b1 || b2
 
+#check Nat × Bool
+opaque blap : Nat × Bool
+#check blap
+#check Prod Nat Nat
+#check Nat → (Nat → Nat)
+#check Nat → Nat → Nat
+#check (Nat → Nat) → Nat
+#check (0,1)
+#check Nat.add
+#check Nat.succ
+#check Nat.add 2
+#eval (Nat.add 2) 3
+#check (Nat.add 2)
+#eval (5,9).fst = (5,0).1
+def α : Type := Nat
+#check α 
+-- see below
+/-opaque γ : Type
+#check γ 
+-/
 
-
-
+#check Type 
+#check Type 1
+def β : Type := Bool
+def γ := α × β 
+#check γ 
