@@ -125,3 +125,41 @@ def α : Type := Nat
 def β : Type := Bool
 def γ := α × β 
 #check γ 
+def F : Type → Type := List
+def G : Type → Type → Type := Prod 
+#check α
+#check F  
+#check F Nat
+#check G α
+#check G β
+#check G α Nat
+
+#check List α 
+#check List Nat 
+#check Type 
+#check Type 1 
+#check Type 0
+
+-- how can I check equality of types???
+-- (ominous feel of being way too deep)
+
+-- how to 'use' a value?
+-- bear in mind, must come up later
+/-
+def martin : Nat := (#eval sampleFunction1 14)
+#eval martin
+-/
+
+-- what is a universe u?
+-- it seemed these things were
+-- parametrized by Nat
+-- but now what is this sheiß??
+
+#check Prod
+
+universe u 
+def Ferb (a : Type u) : Type u := Prod a a 
+#check Ferb
+-- setting it aside for now but...
+-- this does not work as advertised
+-- the check prints an indexed "u_1"
