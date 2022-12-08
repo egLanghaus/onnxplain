@@ -158,8 +158,14 @@ def martin : Nat := (#eval sampleFunction1 14)
 #check Prod
 
 universe u 
-def Ferb (a : Type u) : Type u := Prod a a 
-#check Ferb
+def H (α : Type u) : Type u := Prod α α  
+#check H
 -- setting it aside for now but...
 -- this does not work as advertised
 -- the check prints an indexed "u_1"
+
+def W.{v} (a : Type v) : Type v := Prod a a 
+#check W
+
+opaque exx : Type u
+#check exx
