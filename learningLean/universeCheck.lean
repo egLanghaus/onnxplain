@@ -122,5 +122,5 @@ def dooTwice (f : α → α ) (x : α ) : α :=
 def dooThrice (h : α → α ) (x : α ) : α :=
   h (h (h x))
 #check dooTwice
-#check dooTwice
-
+#check dooThrice
+def anotherTwice (h : α → α ) := compose h h
