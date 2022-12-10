@@ -64,9 +64,11 @@ def doTwice (f : Nat → Nat) (x : Nat) : Nat :=
 /-
 (the codomain and domain must match)
 -/
+/-
 def compose (α β γ : Type) (g : β → γ) (f : α → β) (x : α) : γ :=
   g (f x)
 #check compose
+-/
 /-
 Why does it look weird still?
 -/
@@ -79,4 +81,46 @@ def square (x : Nat) : Nat :=
 -- what is this, does this work?
 #eval compose Nat Nat Nat double square 3  -- 18
 -- it looks like a comment can end it
+
+/- Local Defs-/
+#check let y := 2 + 2; y * y
+#eval let y := 2 + 2; y * y
+-- no "in", here
+def twice_double (x : Nat) : Nat :=
+  let y := x + x; y * y
+
+#eval twice_double 2
+
+-- now it is satisfied, for some reason...
+def tee (x : Nat) : Nat :=
+  let y := x + x
+  y * y
+#eval tee 2
+
+def foo := let a := Nat; fun x : a => x + 2
+#check foo
+-- def bar := (fun a => fun x : a => x + 2) Nat
+
+/-
+in the second definition (x : a) might not make any sense
+-/
+/-
+def dooTwice (α : Type) (f : α → α) (x : α) : α :=
+  f (f x)
+-- 
+def dooThrice (α : Type) (f : α → α) (x : α) : α :=
+  f (f (f x))
+-- also can be done by composition
+-/
+
+variable (α β γ : Type)
+def compose (f : β → γ ) (h : α → β ) : α → γ :=
+  fun (x : α ) => f (h x)
+#check compose
+def dooTwice (f : α → α ) (x : α ) : α :=
+  f (f x)
+def dooThrice (h : α → α ) (x : α ) : α :=
+  h (h (h x))
+#check dooTwice
+#check dooTwice
 
