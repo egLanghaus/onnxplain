@@ -54,10 +54,12 @@ def greater (x y : Nat) :=
   if x > y then x
   else y
 
+/-
 def doTwice (f : Nat → Nat) (x : Nat) : Nat :=
   f (f x)
 
 #check doTwice
+-/
 
 -- composition; book is subtly wrong here
 -- namely, not just *any* two functions
@@ -78,8 +80,6 @@ Why does it look weird still?
 def square (x : Nat) : Nat :=
   x * x
 
--- what is this, does this work?
-#eval compose Nat Nat Nat double square 3  -- 18
 -- it looks like a comment can end it
 
 /- Local Defs-/
@@ -113,6 +113,8 @@ def dooThrice (α : Type) (f : α → α) (x : α) : α :=
 -- also can be done by composition
 -/
 
+-- here is one way to do variables:
+/-
 variable (α β γ : Type)
 def compose (f : β → γ ) (h : α → β ) : α → γ :=
   fun (x : α ) => f (h x)
@@ -123,4 +125,126 @@ def dooThrice (h : α → α ) (x : α ) : α :=
   h (h (h x))
 #check dooTwice
 #check dooThrice
-def anotherTwice (h : α → α ) := compose h h
+def anotherTwice (h : α → α ) := compose α α α h h
+#check (anotherTwice, dooTwice)
+-/
+-- here is another way to do variables
+section useful -- namespace here enables same thing (with the types)
+  variable (α β γ : Type)
+  variable (f : β → γ ) (g : α → β ) (h : α → α)
+  variable (x : α )
+  def compose := f (g x)
+  def doTwice := h (h x)
+  def doThrice := h (h (h x))
+  #check compose
+  #check doTwice
+  #check doThrice
+  
+  #print compose
+  #print doTwice
+  #print doThrice
+end useful
+
+-- now some namespaces
+namespace Foo
+  def a : Nat := 5
+  def eff (x : Nat) : Nat := x + 7
+
+  def fa : Nat := eff a
+  def ffa : Nat := eff (eff a)
+
+  #check a
+  #check eff
+  #check fa
+  #check ffa
+  #check Foo.fa
+end Foo
+
+-- #check a  -- error
+-- #check f  -- error
+#check Foo.a
+#check Foo.eff
+#check Foo.fa
+#check Foo.ffa
+
+section
+open Foo
+
+#check a
+#check eff
+#check fa
+#check Foo.fa
+#check Bool
+end
+
+namespace forst
+def raining : Bool := true
+#check raining
+#eval raining
+#eval ¬ raining
+end forst
+--#check raining -- error
+
+section blaster
+open forst
+#check raining
+end blaster
+
+#check forst.raining
+-- #check blaster.raining -- error!
+-- sections don't support the dot, big diff
+
+#check List.nil
+#check List.cons 
+#check List.map 
+
+-- namespaces again
+namespace ooF
+  def a : Nat := 5
+  def f (x : Nat) : Nat := x + 7
+
+  def fa : Nat := f a
+
+  namespace Bar
+    def ffa : Nat := f (f a)
+
+    #check fa
+    #check ffa
+  end Bar
+
+  #check fa
+  #check Bar.ffa
+end ooF 
+
+#check ooF.fa
+#check ooF.Bar.ffa
+
+section
+open ooF
+
+#check fa
+#check Bar.ffa
+end
+
+-- how to open a namespace from another file?
+
+-- what do you mean *dependent* type???
+def cons (α : Type) (a : α) (as : List α) : List α :=
+  List.cons a as
+
+#check cons Nat        -- Nat → List Nat → List Nat
+#check cons Bool       -- Bool → List Bool → List Bool
+#check cons            -- (α : Type) → α → List α → List α
+-- first dependent type we have seen?
+-- here, types of later arguments depend on value of the first
+-- can later types depend on simple values such as 1 or 2?
+-- can later types depend on type of first argument?
+-- how do I use type_of???
+-- anyway, big important takeaway:
+-- "the type of the output of f depends on its input"
+
+#check @List.cons
+#check @List.nil
+#check @List.length
+#check @List.append
+
