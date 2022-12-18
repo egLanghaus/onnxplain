@@ -56,3 +56,7 @@ def ident {α : Type u} (x : α) := x
 #check @id Nat 10
 -- #check @id 10
 -- error as you'd expect
+
+
+
+

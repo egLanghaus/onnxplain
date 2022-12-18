@@ -16,3 +16,4 @@ take some [guidance](https://github.com/pytorch/pytorch)
 
 refer to the [purported spec](https://github.com/onnx/onnx/blob/main/docs/IR.md)
 
+check [Coq materials](https://softwarefoundations.cis.upenn.edu/) for comparison
