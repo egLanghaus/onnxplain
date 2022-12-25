@@ -36,6 +36,44 @@ axiom implies_intro : (p q : Prop') → (Proof p → Proof q) → Proof (Implies
 
 end TPIL
 
--- #check Proof --error!
+variable {p : Prop}
+variable {q : Prop}
+universe u
+
+section
+  variable {α : Type u}
+  variable (x : α)
+  def ident := x
+end 
+
+-- note difference between section and namespace
+-- section is organizing definitions
+-- variables are confined to the section
+
+#check x
+#check α 
+#check ident
+#check @ident
+#check ident 4
+#check ident "hello"
+
 
 -- MEAT BEGINS: "Working with PaT"
+
+variable {p : Prop}
+variable {q : Prop}
+
+theorem t1 : p → q → p := fun hp : p => fun hq : q => hp 
+#check t1
+#print t1
+
+-- what if I do not give the proof, though?
+opaque t4 : p → q → p
+
+opaque seven : Nat
+
+#check seven
+
+-- is the precedeing OK because Nat is famously inhabited?
+-- (yeah, running with that for now)
+
